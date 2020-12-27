@@ -28,7 +28,7 @@ import {filterImageFromURL, deleteLocalFiles, validateUrl} from './util/util';
   // RETURNS
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
-  app.get("/filteredimage", async ( req, res ) => {
+  app.get("/filteredimage", async ( req:express.Request, res:express.Response ) => {
     try {
       const imageUrl:string = req.query.image_url;
 
@@ -40,7 +40,7 @@ import {filterImageFromURL, deleteLocalFiles, validateUrl} from './util/util';
 
       res.status(200).sendFile(filteredpath);
 
-      fs.readdir(tmpFolder, async (error, files) => {
+      fs.readdir(tmpFolder, async (error: NodeJS.ErrnoException, files: Array<string>) => {
         if (error) throw error;
         for (let file of files) filesToDelete.push(`${tmpFolder}/${file}`);
         await deleteLocalFiles(filesToDelete);
